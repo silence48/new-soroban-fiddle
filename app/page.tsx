@@ -4,7 +4,6 @@ import { useState } from 'react';
 import { BASE_FEE, Networks, TransactionBuilder, scValToNative, SorobanRpc, xdr, Contract, Keypair } from '@stellar/stellar-sdk';
 import { StellarWalletsKit, WalletNetwork, allowAllModules, XBULL_ID } from '@creit.tech/stellar-wallets-kit';
 import { Client, ClientOptions, Spec } from '@stellar/stellar-sdk/contract';
-import { parseSpec } from '@/utils/parseSpec';
 
 const rpc = new SorobanRpc.Server('https://stellar-mainnet.liquify.com/api=41EEWAH79Y5OCGI7/mainnet', { allowHttp: true });
 
@@ -13,6 +12,20 @@ interface FunctionSpec {
   doc: string;
   inputs: { name: string; type: string }[];
   outputs: { name: string; type: string }[];
+}
+function parseSpec(spec: Spec): FunctionSpec[] {
+  return spec.funcs().map(fn => ({
+    name: fn.name().toString(),
+    doc: fn.doc().toString(),
+    inputs: fn.inputs().map(input => ({
+      name: input.name().toString(),
+      type: input.type().switch().name
+    })),
+    outputs: fn.outputs().map(output => ({
+      name: output.switch().name,
+      type: output.switch().name
+    }))
+  }));
 }
 
 async function getSpec(contractId: string): Promise<Spec> {
