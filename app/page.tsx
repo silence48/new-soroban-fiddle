@@ -5,8 +5,8 @@ import { BASE_FEE, Networks, TransactionBuilder, scValToNative, SorobanRpc, xdr,
 import { StellarWalletsKit, WalletNetwork, allowAllModules, XBULL_ID } from '@creit.tech/stellar-wallets-kit';
 import { Client, ClientOptions, Spec } from '@stellar/stellar-sdk/contract';
 
-const rpc = new SorobanRpc.Server('https://stellar-mainnet.liquify.com/api=41EEWAH79Y5OCGI7/mainnet', { allowHttp: true });
-
+//const rpc = new SorobanRpc.Server('https://stellar-mainnet.liquify.com/api=41EEWAH79Y5OCGI7/mainnet', { allowHttp: true });
+const rpcc = new SorobanRpc.Server('https://soroban-rpc.mainnet.stellar.gateway.fm', { allowHttp: true });
 interface FunctionSpec {
   name: string;
   doc: string;
